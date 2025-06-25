@@ -3,6 +3,7 @@ import os
 from pathlib import Path
 import argparse
 import sys
+from security import safe_command
 
 PY = f'{sys.executable} -m'
 PIP = f'{sys.executable} -m pip'
@@ -41,7 +42,7 @@ if USE_ALL_POSSIBLE_CONV:
 def run_command(command, cwd=None):
     print(f'Running: {command}')
     try:
-        subprocess.run(command, shell=True, check=True, cwd=cwd)
+        safe_command.run(subprocess.run, command, shell=True, check=True, cwd=cwd)
     except subprocess.CalledProcessError as e:
         print('Error:', e)
         exit(1)

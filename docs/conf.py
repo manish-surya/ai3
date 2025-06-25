@@ -9,6 +9,7 @@ import subprocess
 import os
 import sys
 import ai3
+from security import safe_command
 
 cur_directory = os.path.dirname(__file__)
 parent_directory = os.path.abspath(
@@ -148,6 +149,5 @@ from example.manual_conv2d import ConvNet
 def setup(app):
     app.add_directive('pprint', PrettyPrintIterable)
     subprocess.call('make clean', shell=True, cwd=cur_directory)
-    subprocess.call(
-        f'PROJECT_NAME=*{pkg_name}* REPO_MAIN={repo_main} REPO_SRC={repo_src} REPO_CSRC={repo_csrc} doxygen',
+    safe_command.run(subprocess.call, f'PROJECT_NAME=*{pkg_name}* REPO_MAIN={repo_main} REPO_SRC={repo_src} REPO_CSRC={repo_csrc} doxygen',
         shell=True, cwd=cur_directory)
