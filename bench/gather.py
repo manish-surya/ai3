@@ -9,6 +9,7 @@ import os
 import torchvision.models as tvm
 import pickle
 import numpy
+import fickling
 
 N = 10
 WARM_ITERS = 10
@@ -103,7 +104,7 @@ def save_conv2d(data_early, data_early_middle, data_late_middle,
 
 def get_conv2d_data(general_fname):
     with open(os.path.join(RESULT_DIR, CUDNN_SUFFIX, f'{general_fname}_{CUDNN_SUFFIX}.pickle'), 'rb') as handle:
-        data = pickle.load(handle)
+        data = fickling.load(handle)
 
     return data
 
@@ -180,7 +181,7 @@ def save_model_times(models_data):
 
 def table_save():
     with open(os.path.join(RESULT_DIR, CUDNN_SUFFIX, f'models_{CUDNN_SUFFIX}.pickle'), 'rb') as handle:
-        cudnn_models = pickle.load(handle)
+        cudnn_models = fickling.load(handle)
 
     models_data = {}
     for model in set(cudnn_models.keys()).union(cudnn_models.keys()):
